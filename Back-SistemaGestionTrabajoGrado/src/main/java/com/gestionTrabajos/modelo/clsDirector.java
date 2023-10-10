@@ -1,21 +1,17 @@
 package com.gestionTrabajos.modelo;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
+
+import com.gestionTrabajos.registro.clsUsuario;
 
 @Entity
+@DiscriminatorValue("DIRECTOR")
 @Table(name = "directores_proyecto")
-@PrimaryKeyJoinColumn(name = "usuario_id")
 public class clsDirector extends clsUsuario {
 
-    @ManyToOne
-    @JoinColumn(name = "anteproyecto_id") 
-    private clsAnteproyecto anteproyecto;
-    
-    public clsDirector() {
-        super();
-    }
 }

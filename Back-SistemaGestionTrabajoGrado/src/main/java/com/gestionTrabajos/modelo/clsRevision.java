@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.gestionTrabajos.Anteproyecto.clsAnteproyecto;
+
 @Entity
 @Table(name = "revisiones")
 public class clsRevision {
