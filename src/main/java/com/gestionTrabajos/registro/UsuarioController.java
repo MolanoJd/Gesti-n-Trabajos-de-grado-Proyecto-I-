@@ -83,12 +83,33 @@ public class UsuarioController {
 	System.out.println("Entrado a listar usuarios");
 	return ResponseEntity.ok(new LinkedHashSet<>(usuarioRepositorio.findAll()));
 	}
-	
+	/*
 	@PostMapping("/")
 	public clsUsuario registrarCuentaDeUsuario(@RequestBody UsuarioRegistroDTO registroDTO) {
 		clsUsuario objUsuarioCreado= usuarioServicio.guardarEstudiante(registroDTO);
 		return objUsuarioCreado;
 	}
+	*/
+	@PostMapping("/")
+	public clsUsuario registrarCuentaDeUsuario(@RequestBody UsuarioRegistroDTO registroDTO, @RequestParam String rol) {
+	    if (rol.equals("Estudiante")) {
+	        return usuarioServicio.guardarEstudiante(registroDTO);
+	    } else if (rol.equals("Jefe Departamento")) {
+	        return usuarioServicio.guardarJefeDepartamento(registroDTO);
+	    }else if(rol.equals("Director")) {
+	    	return usuarioServicio.guardarDirector(registroDTO);
+	    }else if(rol.equals("Jurado")) {
+	    	return usuarioServicio.guardarJurado(registroDTO);	
+	    }else if(rol.equals("Departamento")) {
+	    	return usuarioServicio.guardarDepartamento(registroDTO);
+	    }else if(rol.equals("Comite")) {
+	    	return usuarioServicio.guardarComite(registroDTO);
+	    }else if(rol.equals("Consejo")){
+	    	return usuarioServicio.guardarConsejo(registroDTO);	    }
+	    
+	    return null;
+	}
+
 	
 /*	@GetMapping("/{usuarioId}")
 	public ResponseEntity<?> obtenerUsuario(@PathVariable("usuarioId") Long usuarioId) {
@@ -154,6 +175,57 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{userId}/agregarComentario")
+    public ResponseEntity<?> addCommentToAnteproyecto(@PathVariable Long userId, @RequestParam String atrTitulo, @RequestBody ComentarioRequest comentarioRequest) {
+   
+    	System.out.print("ENTRAMOS");
+
+    	try {
+        	//long numeroComoLong = Long.parseLong(numeroComoString);
+
+        	System.out.print("ENTRAMOS");
+            clsAnteproyecto anteproyecto = usuarioServicio.addCommentToAnteproyecto(
+            		userId,atrTitulo,comentarioRequest.getComentario()
+            );
+            return ResponseEntity.ok(anteproyecto);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al agregar comentario: " + e.getMessage());
+        }
+    }
+
+    public static class ComentarioRequest {
+
+        private String comentario;
+
+        // Constructor vacío
+        public ComentarioRequest() {
+        }
+
+        // Constructor con todos los campos
+        public ComentarioRequest( String comentario) {
+
+            this.comentario = comentario;
+        }
+
+        // Getters
+
+
+        public String getComentario() {
+            return comentario;
+        }
+
+        // Setters
+
+        public void setComentario(String comentario) {
+            this.comentario = comentario;
+        }
+
+        // Puedes agregar aquí cualquier otro método que consideres necesario
+    }
+
 /*
     
     @PutMapping("/{userId}")

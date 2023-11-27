@@ -143,6 +143,19 @@ public abstract class clsUsuario{
 		this.usuario_codigo = usuario_codigo;
 		this.anteproyectos = anteproyectos;
 	}
+	
+
+	public clsUsuario(Long id, String email, String password, String usuario_nombres, String usuario_apellidos,
+			int usuario_codigo) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.usuario_nombres = usuario_nombres;
+		this.usuario_apellidos = usuario_apellidos;
+		this.usuario_codigo = usuario_codigo;
+	}
+
 
 	public clsUsuario(String usuario_nombres, String usuario_apellidos,String email, String password) {
 		super();
@@ -150,6 +163,15 @@ public abstract class clsUsuario{
 		this.password = password;
 		this.usuario_nombres = usuario_nombres;
 		this.usuario_apellidos = usuario_apellidos;
+	}
+	
+	public clsUsuario(String usuario_nombres, String usuario_apellidos,String email, String password,int usuario_codigo) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.usuario_nombres = usuario_nombres;
+		this.usuario_apellidos = usuario_apellidos;
+		this.usuario_codigo = usuario_codigo;
 	}
 
 	public clsUsuario() {

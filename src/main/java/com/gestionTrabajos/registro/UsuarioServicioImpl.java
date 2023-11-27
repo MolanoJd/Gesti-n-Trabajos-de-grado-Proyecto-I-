@@ -33,7 +33,13 @@ import org.springframework.util.StringUtils;
 
 import com.gestionTrabajos.Anteproyecto.AnteproyectoRepository;
 import com.gestionTrabajos.Anteproyecto.clsAnteproyecto;
+import com.gestionTrabajos.modelo.clsComite;
+import com.gestionTrabajos.modelo.clsConsejoFacultad;
+import com.gestionTrabajos.modelo.clsDepartamento;
+import com.gestionTrabajos.modelo.clsDirector;
 import com.gestionTrabajos.modelo.clsEstudiante;
+import com.gestionTrabajos.modelo.clsJefeDepartamento;
+import com.gestionTrabajos.modelo.clsJurado;
 
 
 
@@ -71,12 +77,51 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	@Override
 	public clsUsuario guardarEstudiante(UsuarioRegistroDTO registroDTO) {
 		clsEstudiante usuario = new clsEstudiante(registroDTO.getUsuario_nombres(), 
-				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword());
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(),registroDTO.getUsuario_codigo());
 		return usuarioRepositorio.save(usuario);
-
 	}
-
-    
+	@Override
+	public clsUsuario guardarJefeDepartamento(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsJefeDepartamento usuario = new clsJefeDepartamento(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarDirector(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsDirector usuario = new clsDirector(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarJurado(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsJurado usuario = new clsJurado(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarDepartamento(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsDepartamento usuario = new clsDepartamento(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarComite(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsComite usuario = new clsComite(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarConsejo(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsConsejoFacultad usuario = new clsConsejoFacultad(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		return usuarioRepositorio.save(usuario);
+	}
     @Override
     public Optional<clsUsuario> obtenerUsuario(Long userId) {
         return usuarioRepositorio.findById(userId);
@@ -255,6 +300,34 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	   
+	   
+	   public clsAnteproyecto addCommentToAnteproyecto(Long userId, String atrTitulo, String comentario) {
+	        // Buscar el anteproyecto por el título
+	        clsAnteproyecto anteproyecto = anteproyectoRepositorio.findByAtrTitulo(atrTitulo);
+
+	        if (anteproyecto == null) {
+	            // Manejar el caso en que el anteproyecto no se encuentra
+	            throw new ResourceNotFoundException("Anteproyecto no encontrado con el título: " + atrTitulo);
+	        }
+
+	        // Buscar el usuario por ID
+	        clsUsuario usuario = usuarioRepositorio.findById(userId)
+	                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con el ID: " + userId));
+
+	        // Verificar si el usuario está asociado con el anteproyecto
+	        if (!anteproyecto.getUsuarios().contains(usuario)) {
+	            // Manejar el caso en que el usuario no está asociado con el anteproyecto
+	            throw new ResourceNotFoundException("El usuario no está asociado con este anteproyecto");
+	        }
+	        
+	        // Agregar el comentario al anteproyecto
+	        anteproyecto.agregarComentario(comentario);
+
+	        // Guardar el anteproyecto actualizado
+	        return anteproyectoRepositorio.save(anteproyecto);
+	    }
+	   
 
 	 /*  
 	   @Override

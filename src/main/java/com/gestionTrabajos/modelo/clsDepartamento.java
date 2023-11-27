@@ -12,7 +12,25 @@ import javax.persistence.Table;
 @Table(name = "departamentos")
 public class clsDepartamento extends clsJefeDepartamento {
 
-    @Column(name = "estado_operativo")
+
+	  public clsDepartamento() {
+	        super();
+	    }
+	    public clsDepartamento(String nombres, String apellidos, String email, String password, int codigo) {
+	        super(nombres, apellidos, email, password,codigo);
+	    }
+
+	    // Constructor con todos los campos
+	    public clsDepartamento(Long id, String email, String password, String usuario_nombres, String usuario_apellidos, int usuario_codigo, String matricula, String carrera) {
+	        super(id, email, password, usuario_nombres, usuario_apellidos, usuario_codigo, null);
+
+	    }
+
+	public clsDepartamento(String nombres, String apellidos, String email, String password) {
+      super(nombres, apellidos, email, password);
+  }
+
+	@Column(name = "estado_operativo")
     private boolean estadoOperativo;
 
     public boolean isEstadoOperativo() {

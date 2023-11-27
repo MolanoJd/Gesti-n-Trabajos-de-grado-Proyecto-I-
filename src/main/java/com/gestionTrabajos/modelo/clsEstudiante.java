@@ -21,8 +21,8 @@ public class clsEstudiante extends clsUsuario {
     public clsEstudiante() {
         super();
     }
-    public clsEstudiante(String nombres, String apellidos, String email, String password) {
-        super(nombres, apellidos, email, password);
+    public clsEstudiante(String nombres, String apellidos, String email, String password, int codigo) {
+        super(nombres, apellidos, email, password,codigo);
     }
 
     // Constructor con todos los campos
