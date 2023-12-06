@@ -29,10 +29,16 @@ import org.springframework.web.multipart.MultipartFile;
 //import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.util.StringUtils;
-
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gestionTrabajos.Anteproyecto.AnteproyectoRepository;
 import com.gestionTrabajos.Anteproyecto.clsAnteproyecto;
+import com.gestionTrabajos.modelo.clsAsesor;
 import com.gestionTrabajos.modelo.clsComite;
 import com.gestionTrabajos.modelo.clsConsejoFacultad;
 import com.gestionTrabajos.modelo.clsDepartamento;
@@ -73,11 +79,72 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 
 	}
 */
+	/*
+	@Override
+	public clsUsuario guardarEstudiante(UsuarioRegistroDTO registroDTO) {
+		clsEstudiante usuario = new clsEstudiante(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),passwordEncoder.encode(registroDTO.getPassword()),registroDTO.getUsuario_codigo());
+		usuario.setDtype("ESTUDIANTE");
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarJefeDepartamento(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsJefeDepartamento usuario = new clsJefeDepartamento(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getUsuario_codigo());
+		usuario.setDtype("JEFEDEPARTAMENTO");
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarDirector(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsDirector usuario = new clsDirector(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getUsuario_codigo());
+		usuario.setDtype("DIRECTOR");
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarJurado(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsJurado usuario = new clsJurado(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getUsuario_codigo());
+		usuario.setDtype("JURADO");
+		
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarDepartamento(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsDepartamento usuario = new clsDepartamento(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getUsuario_codigo());
+		usuario.setDtype("DEPARTAMENTO");
+
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarComite(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsComite usuario = new clsComite(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getUsuario_codigo());
+		usuario.setDtype("COMITE");
+
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarConsejo(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsConsejoFacultad usuario = new clsConsejoFacultad(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getUsuario_codigo(),registroDTO.getDtype());
+		usuario.setDtype("FACULTAD");
+		return usuarioRepositorio.save(usuario);
+	}
+	*/
 	
 	@Override
 	public clsUsuario guardarEstudiante(UsuarioRegistroDTO registroDTO) {
 		clsEstudiante usuario = new clsEstudiante(registroDTO.getUsuario_nombres(), 
 				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(),registroDTO.getUsuario_codigo());
+		usuario.setDtype("ESTUDIANTE");
 		return usuarioRepositorio.save(usuario);
 	}
 	@Override
@@ -85,6 +152,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
 		clsJefeDepartamento usuario = new clsJefeDepartamento(registroDTO.getUsuario_nombres(), 
 				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		usuario.setDtype("JEFEDEPARTAMENTO");
 		return usuarioRepositorio.save(usuario);
 	}
 	@Override
@@ -92,6 +160,15 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
 		clsDirector usuario = new clsDirector(registroDTO.getUsuario_nombres(), 
 				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		usuario.setDtype("DIRECTOR");
+		return usuarioRepositorio.save(usuario);
+	}
+	@Override
+	public clsUsuario guardarAsesor(UsuarioRegistroDTO registroDTO) {
+		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
+		clsAsesor usuario = new clsAsesor(registroDTO.getUsuario_nombres(), 
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		usuario.setDtype("ASESOR");
 		return usuarioRepositorio.save(usuario);
 	}
 	@Override
@@ -99,6 +176,8 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
 		clsJurado usuario = new clsJurado(registroDTO.getUsuario_nombres(), 
 				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		usuario.setDtype("JURADO");
+		
 		return usuarioRepositorio.save(usuario);
 	}
 	@Override
@@ -106,6 +185,8 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
 		clsDepartamento usuario = new clsDepartamento(registroDTO.getUsuario_nombres(), 
 				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		usuario.setDtype("DEPARTAMENTO");
+
 		return usuarioRepositorio.save(usuario);
 	}
 	@Override
@@ -113,18 +194,26 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
 		clsComite usuario = new clsComite(registroDTO.getUsuario_nombres(), 
 				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+		usuario.setDtype("COMITE");
+
 		return usuarioRepositorio.save(usuario);
 	}
 	@Override
 	public clsUsuario guardarConsejo(UsuarioRegistroDTO registroDTO) {
 		System.out.printf("Codigo", registroDTO.getUsuario_codigo());
 		clsConsejoFacultad usuario = new clsConsejoFacultad(registroDTO.getUsuario_nombres(), 
-				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo());
+				registroDTO.getUsuario_apellidos(),registroDTO.getEmail(),registroDTO.getPassword(), registroDTO.getUsuario_codigo(),registroDTO.getDtype());
+		usuario.setDtype("FACULTAD");
 		return usuarioRepositorio.save(usuario);
 	}
+	
     @Override
     public Optional<clsUsuario> obtenerUsuario(Long userId) {
         return usuarioRepositorio.findById(userId);
+    }
+    @Override
+    public Optional<clsUsuario> obtenerUsuario(String username) {
+        return Optional.ofNullable(usuarioRepositorio.findByEmail(username));
     }
 
     @Override
@@ -147,80 +236,10 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	        return (UserDetails) usuario;
 	    }
 
-	/*   @Override
-	   @Transactional
-	   public void addProject(Long usuarioId, String atrTitulo) throws NotFoundException {
-		 System.out.println("userId: " + usuarioId);
-		 System.out.println("atrTitulo: " + atrTitulo);
-
-	       Optional<clsUsuario> usuarioOptional = this.usuarioRepositorio.findById(usuarioId);
-	       System.out.println("Paso: " + usuarioOptional.get().email);
-	       System.out.println("Paso: " + usuarioOptional.get().usuario_nombres);
-	       System.out.println("Paso: " +usuarioOptional.get().usuario_codigo);
-	       if (usuarioOptional.get().getDocente_nombres() != null) {
-	           clsUsuario usuario = usuarioOptional.get();
-	           System.out.println("Paso: " +usuarioOptional.get().usuario_codigo);
-	           System.out.println("atrTituloAQUI: " + atrTitulo);
-	           //clsAnteproyecto anteproyectoOptional = anteproyectoRepositorio.findByAtrTitulo("Aplicación de automatas celulares");
-	           List<clsAnteproyecto>anteproyectosOptional = anteproyectoRepositorio.findAll();
-	           System.out.println("Tamaño: " + anteproyectosOptional.size());
-	           for (clsAnteproyecto anteproyecto : anteproyectosOptional) {
-	               if (anteproyecto.getAtrTitulo() != null && anteproyecto.getAtrTitulo().equals(atrTitulo)) {
-	            	   
-	    	           System.out.println("atrTitulo: " + atrTitulo);
-	    	           System.out.println("PasoFinal: " + anteproyecto.getAtrTitulo());
-	    	           System.out.println("atrTitulo: " + atrTitulo);
-	    	           usuario.agregarAnteproyecto(anteproyecto);
-		               usuarioRepositorio.save(usuario);
-	               }
-	           }
-	          
-	               
-	             
-	          
-	       } else {
-	           throw new NotFoundException();
-	       }
-	   }
-*/
-/*	   @Override
-	   @Transactional
-	   public clsUsuario addProject(Long usuarioId, String atrTitulo){
-		 System.out.println("userId: " + usuarioId);
-		 System.out.println("atrTitulo: " + atrTitulo);
-
-	       Optional<clsUsuario> usuarioOptional = this.usuarioRepositorio.findById(usuarioId);
-	       System.out.println("Paso: " + usuarioOptional.get().email);
-	       System.out.println("Paso: " + usuarioOptional.get().usuario_nombres);
-	       System.out.println("Paso: " +usuarioOptional.get().usuario_codigo);
-	       if (usuarioOptional.get().getDocente_nombres() != null) {
-	           clsEstudiante usuario = (clsEstudiante) usuarioOptional.get();
-	           System.out.println("Paso: " +usuarioOptional.get().usuario_codigo);
-	           System.out.println("atrTituloAQUI: " + atrTitulo);
-	           clsAnteproyecto anteproyectoOptional = anteproyectoRepositorio.findByAtrTitulo(atrTitulo);
-	           List<clsAnteproyecto>anteproyectosOptional = anteproyectoRepositorio.findAll();
-	           
-	           if (anteproyectoOptional != null && anteproyectoOptional.getAtrTitulo() != null && anteproyectoOptional.getAtrTitulo().equals(atrTitulo)) {
-	        	    System.out.println("atrTitulo: " + atrTitulo);
-	        	    System.out.println("PasoFinal: " + anteproyectoOptional.getAtrTitulo());
-	        	    System.out.println("atrTitulo: " + atrTitulo);
-	        	    usuario.agregarAnteproyecto(anteproyectoOptional);
-	        	    return usuarioRepositorio.save(usuario);
-	        	}
-
-	           
-	          
-	               
-	             
-	       }
-		return null;
-	   }
-	   */
-	   //C:\Users\juanM\AppData\Local\Temp\tomcat-docbase.8080.11721666356949382804\SubirArchivos
 	   @Override
 	   @Transactional
-	   public clsUsuario addProject(Long usuarioId, String atrTitulo) {
-	       Optional<clsUsuario> usuarioOptional = this.usuarioRepositorio.findById(usuarioId);
+	   public clsUsuario addProject(String username, String atrTitulo) {
+	       Optional<clsUsuario> usuarioOptional = Optional.ofNullable(this.usuarioRepositorio.findByEmail(username));
 	       if (usuarioOptional.isPresent()) {
 	           clsUsuario usuario = usuarioOptional.get();
 	           clsAnteproyecto anteproyecto = anteproyectoRepositorio.findByAtrTitulo(atrTitulo);
@@ -239,14 +258,15 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	   @Override
 	   @Transactional
 	   public clsAnteproyecto agregarArchivo(Long usuarioId, String atrTitulo, MultipartFile archivoAdjunto) {
-	       try {
+	       
+		   try {
 	           Optional<clsUsuario> usuarioOptional = this.usuarioRepositorio.findById(usuarioId);
 	            System.out.println("El usuario si paso: " + usuarioId);
 	            System.out.println("atrTitulo: " + atrTitulo);
 	           if (usuarioOptional.isPresent()) {
 	               clsUsuario usuario = usuarioOptional.get();
 	               clsAnteproyecto anteproyecto = anteproyectoRepositorio.findByAtrTitulo(atrTitulo);
-
+	               
 	               if (anteproyecto != null && usuario.getAnteproyectos().contains(anteproyecto)) {
 	                   if (archivoAdjunto != null && !archivoAdjunto.isEmpty()) {
 	                	   System.out.println("El usuario si paso II: " + usuarioId);
@@ -255,28 +275,45 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	                       String fileStoragePath = servletContext.getRealPath(fileUploadPath);
 
 	                       System.out.println("La ruta es: " + fileStoragePath);
-	                       
-	                       if (fileStoragePath == null) {
-	                           // Si fileUploadPath no está configurado correctamente en el archivo de propiedades, manejar el error
-	                           throw new RuntimeException("La propiedad file.upload.path no está configurada correctamente.");
-	                       }
+	                       System.out.println("La ruta es: " + fileUploadPath);
 
-	                       File storageDirectory = new File(fileStoragePath);
+
+	                       File storageDirectory = new File(fileUploadPath);
 	                       if (!storageDirectory.exists()) {
 	                           storageDirectory.mkdirs();
 	                       }
 
 	                       // Crear una carpeta con el nombre del anteproyecto y el ID del usuario si no existe
-	                       File anteproyectoDirectory = new File(storageDirectory, anteproyecto.getAtrTitulo() + "_" + usuario.getId());
+	                       File anteproyectoDirectory = new File(storageDirectory, anteproyecto.getAtrTitulo());
 	                       if (!anteproyectoDirectory.exists()) {
 	                           anteproyectoDirectory.mkdirs();
 	                       }
-
+	                       System.out.println("Estamos viendo: " + usuarioId);
+	       	            System.out.println("atrTitulo: " + atrTitulo);
 	                       String filePath = Paths.get(anteproyectoDirectory.getAbsolutePath(), fileName).toString();
 	                       Files.copy(archivoAdjunto.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-
+	                       System.out.println("Estamos viendo: " + usuario.getRol());
+	                       System.out.println("Estamos viendo: " + anteproyecto.getAtrEstado());
 	                       anteproyecto.setArchivoAdjunto(filePath);
-
+	                       if("DIRECTOR".equals(usuario.getRol()) && anteproyecto.getAtrEstado() == null) {
+	                    	   System.out.println("Estamos viendo: " + usuario.getRol());
+	   	       	            System.out.println("atrTitulo: " + atrTitulo);
+	   	       	      System.out.println("Estamos viendo: " + anteproyecto.getAtrEstado());
+	                    	   clsUsuario Departamento = this.usuarioRepositorio.findByEmail("departamento@unicauca.edu.co");
+	                    	   anteproyecto.setAtrEstado("formato A");
+	                    	   Departamento.agregarAnteproyecto(anteproyecto);
+	                    	   usuarioRepositorio.save(Departamento);
+	                       }else if("DIRECTOR".equals(usuario.getRol()) && "resolucion".equals(anteproyecto.getAtrEstado())){
+	                    	   anteproyecto.setAtrEstado("formato E");
+	                       }else if("COMITE".equals(usuario.getRol()) && "formato A".equals(anteproyecto.getAtrEstado())){
+	                    	   anteproyecto.setAtrEstado("aceptacion formato A");   
+	                       }else if("JURADO".equals(usuario.getRol()) && "aceptacion formato A".equals(anteproyecto.getAtrEstado())){
+	                    	   anteproyecto.setAtrEstado("formato B");
+	                       }else if("JEFEDEPARTAMENTO".equals(usuario.getRol()) && "formato B".equals(anteproyecto.getAtrEstado())){
+	                    	   anteproyecto.setAtrEstado("formato C");
+	                       }else if("FACULTAD".equals(usuario.getRol()) && "formato C".equals(anteproyecto.getAtrEstado())){
+	                    	   anteproyecto.setAtrEstado("resolucion");
+	                       }
 	                       return anteproyectoRepositorio.save(anteproyecto);
 	                   } else {
 	                       throw new RuntimeException("El archivo adjunto está vacío.");
@@ -302,7 +339,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	}
 	   
 	   
-	   public clsAnteproyecto addCommentToAnteproyecto(Long userId, String atrTitulo, String comentario) {
+	   public clsAnteproyecto addCommentToAnteproyecto(String username, String atrTitulo, String comentario) {
 	        // Buscar el anteproyecto por el título
 	        clsAnteproyecto anteproyecto = anteproyectoRepositorio.findByAtrTitulo(atrTitulo);
 
@@ -312,9 +349,10 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	        }
 
 	        // Buscar el usuario por ID
-	        clsUsuario usuario = usuarioRepositorio.findById(userId)
-	                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con el ID: " + userId));
-
+	        clsUsuario usuario = usuarioRepositorio.findByEmail(username);
+	        if (usuario == null) {
+	            throw new ResourceNotFoundException("Usuario no encontrado con el EMAIL: " + username);
+	        }
 	        // Verificar si el usuario está asociado con el anteproyecto
 	        if (!anteproyecto.getUsuarios().contains(usuario)) {
 	            // Manejar el caso en que el usuario no está asociado con el anteproyecto
@@ -328,24 +366,41 @@ public class UsuarioServicioImpl implements UsuarioServicio {
 	        return anteproyectoRepositorio.save(anteproyecto);
 	    }
 	   
+	    // Método para descargar un archivo específico
+	    public ResponseEntity<Resource> descargarArchivo(String tituloAnteproyecto, String nombreArchivo) {
+	        try {
+	            Path archivoPath = Paths.get(fileUploadPath).resolve(tituloAnteproyecto).resolve(nombreArchivo).normalize();
+	            Resource recurso = new UrlResource(archivoPath.toUri());
 
-	 /*  
-	   @Override
-	   public void addProject(Long userId, clsAnteproyecto anteproyecto) throws NotFoundException {
-	        Optional<clsUsuario> usuarioOptional = usuarioRepositorio.findById(userId);
-	        if (usuarioOptional.isPresent()) {
-	            clsUsuario usuario = usuarioOptional.get();
-	            usuario.agregarAnteproyecto(anteproyecto); // Agregar el anteproyecto al usuario
-	            usuarioRepositorio.save(usuario);
-	        } else {
-	            throw new NotFoundException(); // Manejar la excepción de usuario no encontrado
+	            if (recurso.exists() && recurso.isReadable()) {
+	                return ResponseEntity.ok()
+	                        .header("Content-Disposition", "attachment; filename=\"" + recurso.getFilename() + "\"")
+	                        .body(recurso);
+	            } else {
+	                throw new RuntimeException("El archivo no se pudo encontrar o leer: " + nombreArchivo);
+	            }
+	        } catch (Exception e) {
+	            throw new RuntimeException("Error al descargar el archivo: " + nombreArchivo, e);
 	        }
 	    }
-	@Override
-	public clsUsuario obtenerUsuarioNombre(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-*/
+
+
+	    @Transactional
+	    public clsUsuario actualizarUsuario(String email, UsuarioRegistroDTO usuarioDTO, String rol) {
+	    	System.out.println("El usuario si paso II: ");
+	    	clsUsuario usuarioExistente = usuarioRepositorio.findByEmail(email);
+	    	 if (usuarioExistente == null) {
+		            throw new ResourceNotFoundException("Usuario no encontrado con el EMAIL: " + email);
+		        }
+	        // Actualizar los campos del usuario
+	        usuarioExistente.setUsuario_nombres(usuarioDTO.getUsuario_nombres());
+	        usuarioExistente.setUsuario_apellidos(usuarioDTO.getUsuario_apellidos());
+	        usuarioExistente.setEmail(usuarioDTO.getEmail());
+	        usuarioExistente.setUsuario_codigo(usuarioDTO.getUsuario_codigo());
+	        usuarioExistente.setPassword(usuarioDTO.getPassword());
+	        usuarioExistente.setRol(rol);	        
+	        return usuarioRepositorio.save(usuarioExistente);
+	    }
+
 	
 }

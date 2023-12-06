@@ -29,6 +29,9 @@ public class clsDepartamento extends clsJefeDepartamento {
 	public clsDepartamento(String nombres, String apellidos, String email, String password) {
       super(nombres, apellidos, email, password);
   }
+    public clsDepartamento(String nombres, String apellidos, String email, String password, int codigo,String dtype) {
+        super(nombres, apellidos, email, password,codigo,dtype);
+    }
 
 	@Column(name = "estado_operativo")
     private boolean estadoOperativo;

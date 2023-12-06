@@ -20,8 +20,8 @@ public class clsComite extends clsUsuario{
 	    }
 
 	    // Constructor con todos los campos
-	    public clsComite(Long id, String email, String password, String usuario_nombres, String usuario_apellidos, int usuario_codigo, String matricula, String carrera) {
-	        super(id, email, password, usuario_nombres, usuario_apellidos, usuario_codigo, null);
+	    public clsComite(String nombres, String apellidos, String email, String password, int codigo,String dtype) {
+	        super(nombres, apellidos, email, password,codigo,dtype);
 	    }
 
 }

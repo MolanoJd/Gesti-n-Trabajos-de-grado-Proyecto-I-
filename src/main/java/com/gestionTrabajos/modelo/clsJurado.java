@@ -23,16 +23,15 @@ public class clsJurado extends clsUsuario{
 	    }
 
 	    // Constructor con todos los campos
-	    public clsJurado(Long id, String email, String password, String usuario_nombres, String usuario_apellidos, int usuario_codigo, String matricula, String carrera) {
-	        super(id, email, password, usuario_nombres, usuario_apellidos, usuario_codigo, null);
 
-	    }
 
 	public clsJurado(String nombres, String apellidos, String email, String password) {
         super(nombres, apellidos, email, password);
     }
 
-
+    public clsJurado(String nombres, String apellidos, String email, String password, int codigo,String dtype) {
+        super(nombres, apellidos, email, password,codigo,dtype);
+    }
     @ManyToMany(mappedBy = "jurados")
     private Set<clsRevision> revisiones;
 

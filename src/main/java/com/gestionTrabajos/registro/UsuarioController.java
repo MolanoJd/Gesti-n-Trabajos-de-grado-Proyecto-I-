@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gestionTrabajos.Anteproyecto.clsAnteproyecto;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 
 @RestController
@@ -61,7 +63,7 @@ public class UsuarioController {
 
 	    // Transformar clsUsuario en UsuarioRegistroDTO
 	    UsuarioRegistroDTO usuarioDTO = new UsuarioRegistroDTO();
-	    usuarioDTO.setUsuario_nombres(usuario.getDocente_nombres());
+	    usuarioDTO.setUsuario_nombres(usuario.getUsuario_nombres());
 	    usuarioDTO.setUsuario_apellidos(usuario.getUsuario_apellidos());
 	    usuarioDTO.setEmail(usuario.getEmail());
 
@@ -105,7 +107,10 @@ public class UsuarioController {
 	    }else if(rol.equals("Comite")) {
 	    	return usuarioServicio.guardarComite(registroDTO);
 	    }else if(rol.equals("Consejo")){
-	    	return usuarioServicio.guardarConsejo(registroDTO);	    }
+	    	return usuarioServicio.guardarConsejo(registroDTO);	    
+	    	}else if(rol.equals("Asesor")){
+		    	return usuarioServicio.guardarAsesor(registroDTO);
+		    }
 	    
 	    return null;
 	}
@@ -123,9 +128,20 @@ public class UsuarioController {
 	    }
 	}*/
 	
-	@GetMapping("/{usuarioId}")
+	/*@GetMapping("/{usuarioId}")
 	public ResponseEntity<?> obtenerUsuario(@PathVariable("usuarioId") Long usuarioId){
 	    Optional<clsUsuario> usuarioOptional = usuarioServicio.obtenerUsuario(usuarioId);
+	    
+	    if (usuarioOptional.isPresent()) {
+	        clsUsuario usuario = usuarioOptional.get();
+	        return ResponseEntity.ok(usuario); // Devolver el usuario si se encontró
+	    } else {
+	        return ResponseEntity.notFound().build(); // Devolver una respuesta 404 si no se encontró
+	    }
+	}*/
+	@GetMapping("/{username}")
+	public ResponseEntity<?> obtenerUsuario(@PathVariable("username") String username){
+	    Optional<clsUsuario> usuarioOptional = usuarioServicio.obtenerUsuario(username);
 	    
 	    if (usuarioOptional.isPresent()) {
 	        clsUsuario usuario = usuarioOptional.get();
@@ -145,16 +161,16 @@ public class UsuarioController {
     	usuarioServicio.eliminarUsuario(usuarioId);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<clsUsuario> addProject(@PathVariable Long userId, @RequestParam String atrTitulo){
+    @PutMapping("/{username}")
+    public ResponseEntity<clsUsuario> addProject(@PathVariable ("username") String username, @RequestParam String atrTitulo){
         
-            System.out.println("userId: " + userId);
+            System.out.println("userId: " + username);
             System.out.println("atrTitulo: " + atrTitulo);
 
             // Agregar el proyecto al usuario
-           // usuarioServicio.addProject(userId, atrTitulo);   
+            // usuarioServicio.addProject(userId, atrTitulo);   
             // Devolver una respuesta exitosa (por ejemplo, código 201 Created)
-            return ResponseEntity.ok(usuarioServicio.addProject(userId, atrTitulo));
+            return ResponseEntity.ok(usuarioServicio.addProject(username, atrTitulo));
     }
     
     @PutMapping("/{userId}/addFileToAnteproyecto") 
@@ -176,8 +192,8 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/{userId}/agregarComentario")
-    public ResponseEntity<?> addCommentToAnteproyecto(@PathVariable Long userId, @RequestParam String atrTitulo, @RequestBody ComentarioRequest comentarioRequest) {
+    @PutMapping("/{username}/agregarComentario")
+    public ResponseEntity<?> addCommentToAnteproyecto(@PathVariable String username, @RequestParam String atrTitulo, @RequestBody ComentarioRequest comentarioRequest) {
    
     	System.out.print("ENTRAMOS");
 
@@ -186,7 +202,7 @@ public class UsuarioController {
 
         	System.out.print("ENTRAMOS");
             clsAnteproyecto anteproyecto = usuarioServicio.addCommentToAnteproyecto(
-            		userId,atrTitulo,comentarioRequest.getComentario()
+            		username,atrTitulo,comentarioRequest.getComentario()
             );
             return ResponseEntity.ok(anteproyecto);
         } catch (ResourceNotFoundException e) {
@@ -226,6 +242,13 @@ public class UsuarioController {
         // Puedes agregar aquí cualquier otro método que consideres necesario
     }
 
+    
+    @GetMapping("/{tituloAnteproyecto}/descargar/{nombreArchivo}")
+    public ResponseEntity<Resource> descargarArchivo(@PathVariable String tituloAnteproyecto, @PathVariable String nombreArchivo) {
+        System.out.println("userId: AAAAAAAAAAAAAAAAAAAAAAAAAaaaa");
+
+    	return usuarioServicio.descargarArchivo(tituloAnteproyecto, nombreArchivo);
+    }
 /*
     
     @PutMapping("/{userId}")
@@ -247,5 +270,13 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }*/
+ // En UsuarioController
+
+    @PutMapping("/{email}/actualizar")
+    public ResponseEntity<clsUsuario> actualizarUsuario(@PathVariable String email, @RequestBody UsuarioRegistroDTO usuarioDTO,@RequestParam String rol) {
+    	System.out.println("El usuario si paso IIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: ");
+    	clsUsuario usuarioActualizado = usuarioServicio.actualizarUsuario(email, usuarioDTO,rol);
+        return ResponseEntity.ok(usuarioActualizado);
+    }
 
 }

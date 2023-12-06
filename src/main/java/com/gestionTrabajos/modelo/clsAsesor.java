@@ -10,17 +10,17 @@ import java.util.List;
 import com.gestionTrabajos.registro.clsUsuario;
 
 @Entity
-@DiscriminatorValue("DIRECTOR")
-@Table(name = "directores_proyecto")
-public class clsDirector extends clsUsuario {
-	  public clsDirector() {
+@DiscriminatorValue("ASESOR")
+@Table(name = "asesores_proyecto")
+public class clsAsesor extends clsUsuario {
+	  public clsAsesor() {
 	        super();
 	    }
-	    public clsDirector(String nombres, String apellidos, String email, String password, int codigo) {
+	    public clsAsesor(String nombres, String apellidos, String email, String password, int codigo) {
 	        super(nombres, apellidos, email, password,codigo);
 	    }
 
-	    public clsDirector(String nombres, String apellidos, String email, String password, int codigo,String dtype) {
+	    public clsAsesor(String nombres, String apellidos, String email, String password, int codigo,String dtype) {
 	        super(nombres, apellidos, email, password,codigo,dtype);
 	    }
 

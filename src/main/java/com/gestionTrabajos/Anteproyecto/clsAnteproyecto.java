@@ -2,7 +2,7 @@ package com.gestionTrabajos.Anteproyecto;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import java.time.LocalDate;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.gestionTrabajos.registro.JwtUtils;
 import com.gestionTrabajos.registro.clsUsuario;
 import com.gestionTrabajos.revision.clsRevision;
+import javax.persistence.CascadeType;
 
 @Entity
 @Table(name = "anteproyectos")
@@ -41,13 +42,31 @@ public class clsAnteproyecto {
 	@OneToMany(mappedBy = "anteproyecto")
 	private List<clsRevision> revisiones;
 
-
+	
 	@ElementCollection
 	@CollectionTable(name = "anteproyecto_comentarios", joinColumns = @JoinColumn(name = "anteproyecto_id"))
 	@Column(name = "comentario")
 	private List<String> comentarios;
-	
+
 	 private String tokenJwt;
+	 
+	    @Column(name = "fecha_inicio")
+	    private LocalDate atrFechaInicio;
+
+	    @Column(name = "fecha_fin")
+	    private LocalDate atrFechaFin;
+	    
+		@Column(length = 250, nullable = true, unique = false)
+		private String atrEstado;
+	    
+
+	public String getAtrEstado() {
+			return atrEstado;
+		}
+
+		public void setAtrEstado(String atrEstado) {
+			this.atrEstado = atrEstado;
+		}
 
 	/*    @Transient // Esta anotación indica que el campo no será persistido en la base de datos
 	    private MultipartFile archivoAdjunto;
@@ -136,7 +155,21 @@ public class clsAnteproyecto {
 	public void setRevisiones(List<clsRevision> revisiones) {
 		this.revisiones = revisiones;
 	}
+	  public LocalDate getAtrFechaInicio() {
+	        return atrFechaInicio;
+	    }
 
+	    public void setAtrFechaInicio(LocalDate atrFechaInicio) {
+	        this.atrFechaInicio = atrFechaInicio;
+	    }
+
+	    public LocalDate getAtrFechaFin() {
+	        return atrFechaFin;
+	    }
+
+	    public void setAtrFechaFin(LocalDate atrFechaFin) {
+	        this.atrFechaFin = atrFechaFin;
+	    }
 
 
 }

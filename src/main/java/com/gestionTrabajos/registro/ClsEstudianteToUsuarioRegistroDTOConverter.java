@@ -14,7 +14,7 @@ public class ClsEstudianteToUsuarioRegistroDTOConverter implements Converter<cls
         // Realiza la conversión de clsEstudiante a UsuarioRegistroDTO aquí
         // Por ejemplo, puedes copiar los campos uno a uno o realizar una conversión personalizada
 
-        usuarioRegistroDTO.setUsuario_nombres(clsEstudiante.getDocente_nombres());
+        usuarioRegistroDTO.setUsuario_nombres(clsEstudiante.getUsuario_nombres());
         usuarioRegistroDTO.setUsuario_apellidos(clsEstudiante.getUsuario_apellidos());
         usuarioRegistroDTO.setEmail(clsEstudiante.getEmail());
         usuarioRegistroDTO.setPassword(clsEstudiante.getPassword());

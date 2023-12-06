@@ -46,7 +46,7 @@ public abstract class clsUsuario{
 	@Column(name = "apellido", length = 60, nullable = false)
 	protected String usuario_apellidos;
 
-	@Column(name = "codigo", columnDefinition = "INT(15)")
+	@Column(name = "codigo", columnDefinition = "INT(64)")
 	protected int usuario_codigo;
 
     @ManyToMany
@@ -58,9 +58,15 @@ public abstract class clsUsuario{
     )
     protected Set<clsAnteproyecto> anteproyectos = new HashSet<>();
 
+    @Column(name = "Rol", length = 60, nullable = false)
+    protected String dtype;
 
-
-	
+	public String getRol() {
+		return this.dtype;
+	}
+	public void setRol(String rol) {
+		this.dtype = rol;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -85,7 +91,7 @@ public abstract class clsUsuario{
 		this.password = password;
 	}
 
-	public String getDocente_nombres() {
+	public String getUsuario_nombres() {
 		return usuario_nombres;
 	}
 
@@ -102,7 +108,7 @@ public abstract class clsUsuario{
 	}
 
 	
-	public int get_Usuario_codigo() {
+	public int getUsuario_codigo() {
 		return usuario_codigo;
 	}
 
@@ -155,6 +161,17 @@ public abstract class clsUsuario{
 		this.usuario_apellidos = usuario_apellidos;
 		this.usuario_codigo = usuario_codigo;
 	}
+	public clsUsuario(Long id, String email, String password, String usuario_nombres, String usuario_apellidos,
+			int usuario_codigo, String dtype) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.usuario_nombres = usuario_nombres;
+		this.usuario_apellidos = usuario_apellidos;
+		this.usuario_codigo = usuario_codigo;
+		this.dtype = dtype;
+	}
 
 
 	public clsUsuario(String usuario_nombres, String usuario_apellidos,String email, String password) {
@@ -174,6 +191,24 @@ public abstract class clsUsuario{
 		this.usuario_codigo = usuario_codigo;
 	}
 
+	public String getDtype() {
+		return dtype;
+	}
+
+	public void setDtype(String dtype) {
+		this.dtype = dtype;
+	}
+
+	public clsUsuario(String usuario_nombres, String usuario_apellidos,String email, String password,int usuario_codigo,String dtype) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.usuario_nombres = usuario_nombres;
+		this.usuario_apellidos = usuario_apellidos;
+		this.usuario_codigo = usuario_codigo;
+		this.dtype = dtype;
+	}
+	
 	public clsUsuario() {
 		
 	}
@@ -189,7 +224,7 @@ public abstract class clsUsuario{
 	        usuarioDTO.setId(this.getId());
 	        usuarioDTO.setEmail(this.getEmail());
 	        usuarioDTO.setPassword(this.getPassword());
-	        usuarioDTO.setUsuario_nombres(this.getDocente_nombres());
+	        usuarioDTO.setUsuario_nombres(this.getUsuario_nombres());
 	        usuarioDTO.setUsuario_apellidos(this.getUsuario_apellidos());
 	  
 	        return usuarioDTO;

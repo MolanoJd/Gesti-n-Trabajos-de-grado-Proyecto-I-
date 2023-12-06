@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.AuthenticationException;
 
 import com.gestionTrabajos.registro.JwtUtils;
+import com.gestionTrabajos.registro.UsuarioRepository;
+import com.gestionTrabajos.registro.clsUsuario;
+import java.util.Set;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.LinkedHashSet;
 
 @RestController
@@ -30,11 +34,15 @@ import java.util.LinkedHashSet;
 public class AnteproyectoController {
 
     private AnteproyectoRepository anteproyectoRepositorio;
+    
+	private UsuarioRepository usuarioRepositorio;
 
     @Autowired
-    public AnteproyectoController(AnteproyectoRepository anteproyectoRepositorio) {
+    public AnteproyectoController(AnteproyectoRepository anteproyectoRepositorio, UsuarioRepository usuarioRepositorio) {
         this.anteproyectoRepositorio = anteproyectoRepositorio;
+        this.usuarioRepositorio = usuarioRepositorio;
     }
+
 //AQUI PUEDE FALLAR
 
     
@@ -42,9 +50,41 @@ public class AnteproyectoController {
     public ResponseEntity<?> listarAnteproyectos(){
         return ResponseEntity.ok(new LinkedHashSet<>(anteproyectoRepositorio.findAll()));
     }
+    @GetMapping("/usuario/{email}")
+    public ResponseEntity<?> listarAnteproyectosPorUsuario(@PathVariable String email) {
+        // Buscar el usuario por email
+        Optional<clsUsuario> usuarioOptional = Optional.ofNullable(usuarioRepositorio.findByEmail(email));
 
+        if (usuarioOptional.isPresent()) {
+            clsUsuario usuario = usuarioOptional.get();
+            // Obtener los anteproyectos asociados con este usuario
+            Set<clsAnteproyecto> anteproyectosDelUsuario = usuario.getAnteproyectos();
 
-    @GetMapping("/anteproyectos/{id}")
+            return ResponseEntity.ok(new LinkedHashSet<>(anteproyectosDelUsuario));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    
+    //MIRAR ESTUDIANTES
+    @GetMapping("/usuario/id/{userID}")
+    public ResponseEntity<?> listarAnteproyectosPorUsuarioID(@PathVariable Long userID) {
+        // Buscar el usuario por email
+        Optional<clsUsuario> usuarioOptional = usuarioRepositorio.findById(userID);
+
+        if (usuarioOptional.isPresent()) {
+            clsUsuario usuario = usuarioOptional.get();
+            // Obtener los anteproyectos asociados con este usuario
+            Set<clsAnteproyecto> anteproyectosDelUsuario = usuario.getAnteproyectos();
+
+            return ResponseEntity.ok(new LinkedHashSet<>(anteproyectosDelUsuario));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<clsAnteproyecto> obtenerAnteproyecto(@PathVariable Long id) {
         clsAnteproyecto anteproyecto = anteproyectoRepositorio.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No existe el anteproyecto con el ID : " + id));
@@ -70,7 +110,23 @@ public class AnteproyectoController {
     
     @PostMapping("/")
     public ResponseEntity<clsAnteproyecto> crearAnteproyecto(@RequestBody clsAnteproyecto anteproyecto){
-    	clsAnteproyecto anteproyectoGuardado = anteproyectoRepositorio.save(anteproyecto);
+    	 clsAnteproyecto anteproyectoGuardado = anteproyectoRepositorio.save(anteproyecto);
+
+         // Establecer estado y guardar nuevamente
+         //anteproyectoGuardado.setAtrEstado("formato A");
+         //anteproyectoGuardado = anteproyectoRepositorio.save(anteproyectoGuardado);
+
+    	 Optional<clsUsuario> usuarioOptional = usuarioRepositorio.findById((long) 6);
+    	 //Optional<clsUsuario> usuarioOptionalII = usuarioRepositorio.findById((long) 10);
+    	//Optional<clsUsuario> usuarioOptional = Optional.ofNullable(usuarioRepositorio.findByDtype("FACULTAD"));
+    	 if (usuarioOptional.isPresent()) {
+    	        clsUsuario usuario = usuarioOptional.get();
+    	   //     clsUsuario usuarioII = usuarioOptionalII.get();
+    	        usuario.agregarAnteproyecto(anteproyectoGuardado);
+    	     //   usuarioII.agregarAnteproyecto(anteproyectoGuardado);
+    	        usuarioRepositorio.save(usuario);
+    	       // usuarioRepositorio.save(usuarioII);// Guardar los cambios en el usuario
+    	    }
         return ResponseEntity.ok(anteproyectoGuardado);
     }
     
@@ -85,7 +141,7 @@ public class AnteproyectoController {
 
         // Llamar al método para guardar el anteproyecto actualizado
         clsAnteproyecto anteproyectoActualizado = anteproyectoRepositorio.save(anteproyecto);
-
+        
         return ResponseEntity.ok(anteproyectoActualizado);
     }
 

@@ -13,6 +13,29 @@ public class UsuarioRegistroDTO {
 	private String usuario_apellidos;
 	private int usuario_codigo;
 	private List<clsAnteproyecto> anteproyectos;
+	private String dtype; // Nuevo campo para el tipo discriminador
+
+	// Getters y setters para dtype
+	public String getDtype() {
+		return dtype;
+	}
+
+	public void setDtype(String dtype) {
+		this.dtype = dtype;
+	}
+
+	// Resto de getters y setters...
+
+	public UsuarioRegistroDTO(Long id, String email, String password, String usuario_nombres, String usuario_apellidos, int usuario_codigo, List<clsAnteproyecto> anteproyectos, String dtype) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.usuario_nombres = usuario_nombres;
+		this.usuario_apellidos = usuario_apellidos;
+		this.usuario_codigo = usuario_codigo;
+		this.anteproyectos = anteproyectos;
+		this.dtype = dtype;
+	}
 
 	public Long getId() {
 		return id;
